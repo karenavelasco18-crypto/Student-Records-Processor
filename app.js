@@ -1,9 +1,3 @@
-// ==============================================
-// Student Records Data Processor
-// Pure JavaScript — No HTML / No Node.js
-// ==============================================
-
-// 1. STUDENT DATABASE — 31 records
 const students = [
   { id: 1, name: "Elena Rose", year: 3, course: "BS Information Technology", grades: [88, 92, 90, 94], enrolled: true },
   { id: 2, name: "Marco Diaz", year: 2, course: "BS Computer Science", grades: [85, 80, 83, 81], enrolled: true },
@@ -36,17 +30,14 @@ const students = [
   { id: 29, name: "Isabel Guzman", year: 3, course: "BS Computer Science", grades: [93, 95, 94, 96], enrolled: true },
   { id: 30, name: "Mateo Cardenas", year: 2, course: "BS Information Technology", grades: [83, 81, 82, 84], enrolled: true },
   { id: 31, name: "Elena Marquez", year: 4, course: "BS Business Administration", grades: [], enrolled: true }
-];// ==============================================
-// 2. CORE FUNCTIONS
-// ==============================================
+];
 
+// FUNCTIONS
 function getAverageGrade(student) {
   if (!student.grades || student.grades.length === 0) return 0;
   const sum = student.grades.reduce((total, g) => total + g, 0);
   return Math.round((sum / student.grades.length) * 100) / 100;
-}
-
-function getTopStudents(students, n) {
+}function getTopStudents(students, n) {
   if (typeof n !== "number" || n < 0) {
     throw new Error("Invalid input: n must be a non-negative number.");
   }
@@ -104,17 +95,8 @@ function exportSummary(students) {
   const overallSum = students.reduce((sum, s) => sum + getAverageGrade(s), 0);
   const overallAverage = Math.round((overallSum / totalStudents) * 100) / 100;
   const topStudent = getTopStudents(students, 1)[0] || null;
-  return {
-    totalStudents,
-    overallAverage,
-    topStudent,
-    courseBreakdown: getCourseAverages(students)
-  };
+  return { totalStudents, overallAverage, topStudent, courseBreakdown: getCourseAverages(students) };
 }
-
-// ==============================================
-// STRETCH GOALS
-// ==============================================
 
 function filterByYear(students, year) {
   if (!Array.isArray(students)) return [];
@@ -126,10 +108,7 @@ function sortByName(students) {
   return [...students].sort((a, b) => a.name.localeCompare(b.name));
 }
 
-// ==============================================
-// 3. MAIN REPORT
-// ==============================================
-
+// MAIN REPORT
 function main() {
   console.log("=".repeat(55));
   console.log("       📊 STUDENT RECORDS ANALYSIS REPORT");
@@ -154,7 +133,9 @@ function main() {
   } catch (err) {
     console.log("   Error:", err.message);
   }
-  console.log("");console.log("📌 AVERAGE GRADE BY COURSE (Highest → Lowest)");
+  console.log("");
+
+  console.log("📌 AVERAGE GRADE BY COURSE (Highest → Lowest)");
   getCourseAverages(students).forEach(c => {
     console.log(   ${c.course}: ${c.averageGrade}%);
   });
@@ -166,9 +147,7 @@ function main() {
     console.log(\n   [${course}] — ${list.length} student(s));
     list.forEach(s => console.log(      • ${s.name} (Yr${s.year}) | Avg: ${getAverageGrade(s)}%));
   });
-  console.log("");
-
-  console.log("📌 STUDENT SEARCH EXAMPLE");
+  console.log("");console.log("📌 STUDENT SEARCH EXAMPLE");
   const found = findStudent(students, "lucia navarro");
   console.log(found
     ?    Found: ${found.name} — ${found.course} | Avg: ${getAverageGrade(found)}%
@@ -191,5 +170,4 @@ function main() {
   console.log("=".repeat(55));
 }
 
-main();
 main();
